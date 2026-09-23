@@ -254,10 +254,10 @@ def main() -> None:
 def _public_url(post_urn: str) -> str:
     if not post_urn:
         return ""
-    activity_id = post_urn.rsplit(":", 1)[-1]
-    return f"https://www.linkedin.com/feed/update/{post_urn}/" \
-        if post_urn.startswith("urn:li:share:") \
-        else f"https://www.linkedin.com/feed/update/urn:li:activity:{activity_id}/"
+    # 응답 URN 전체를 그대로 사용한다. ugcPost id의 마지막 세그먼트로
+    # urn:li:activity 를 조립하면 두 id가 달라 열리지 않는 URL이 나온다.
+    # feed/update 경로는 share/ugcPost URN을 모두 처리한다.
+    return f"https://www.linkedin.com/feed/update/{post_urn}/"
 
 
 if __name__ == "__main__":
